@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 body {
-  @apply bg-linen text-forest;
+  @apply bg-hilltop-bg-light text-hilltop-charcoal;
 }
