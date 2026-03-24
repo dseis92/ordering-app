@@ -3,9 +3,9 @@ const brand = {
   tagline: "Stevens Point's favorite since the 1980s",
   logo: null, // set to a path like "/logo.svg" to use an image
   colors: {
-    primary: "#134611",   // forest
-    accent: "#64b445",    // fern
-    background: "#ecebe4", // linen
+    primary: "#0a4f39",   // Hilltop deep forest green
+    accent: "#11694d",    // Hilltop lighter green
+    background: "#f6f6f6", // Hilltop light gray
   },
   currency: "USD",
   taxRate: 0.055, // Wisconsin state sales tax (5.5%)

@@ -2,10 +2,10 @@ import { motion } from "framer-motion";
 
 export default function Button({ children, variant = "primary", className = "", ...props }) {
   const variants = {
-    primary: "bg-brand-primary text-white hover:bg-brand-dark shadow-sm",
-    secondary: "bg-gray-100 text-gray-900 hover:bg-gray-200",
-    outline: "border-2 border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white",
-    ghost: "text-brand-primary hover:bg-brand-primary/10",
+    primary: "bg-hilltop-green text-white hover:bg-hilltop-green-hover shadow-sm",
+    secondary: "bg-gray-100 text-hilltop-charcoal hover:bg-gray-200",
+    outline: "border-2 border-hilltop-green text-hilltop-green hover:bg-hilltop-green hover:text-white",
+    ghost: "text-hilltop-green hover:bg-hilltop-green/10",
   };
 
   return (

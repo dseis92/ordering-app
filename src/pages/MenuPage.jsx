@@ -36,27 +36,27 @@ export default function MenuPage() {
     : `${brand.estimatedPickupMinutes} min`;
 
   return (
-    <div className="bg-gray-50 min-h-screen pb-32">
+    <div className="bg-hilltop-bg-light min-h-screen pb-32">
       {/* Restaurant Header */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-gray-200 shadow-sm">
         <div className="max-w-5xl mx-auto px-4 py-6">
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">{brand.name}</h1>
+            <h1 className="text-3xl md:text-4xl font-display font-bold text-hilltop-charcoal mb-2">{brand.name}</h1>
 
             {/* Info Pills */}
             <div className="flex flex-wrap items-center gap-3 text-sm mb-3">
               <div className="flex items-center gap-1">
                 <Star size={16} className="fill-yellow-400 text-yellow-400" />
-                <span className="font-semibold text-gray-900">{brand.rating}</span>
-                <span className="text-gray-500">({brand.reviewCount}+)</span>
+                <span className="font-semibold text-hilltop-charcoal">{brand.rating}</span>
+                <span className="text-hilltop-gray">({brand.reviewCount}+)</span>
               </div>
 
               <span className="text-gray-300">•</span>
 
-              <div className="flex items-center gap-1.5 text-gray-600">
+              <div className="flex items-center gap-1.5 text-hilltop-gray">
                 <Clock size={16} />
                 <span>{estimatedTime}</span>
               </div>
@@ -64,7 +64,7 @@ export default function MenuPage() {
               {orderType === "delivery" && (
                 <>
                   <span className="text-gray-300">•</span>
-                  <div className="flex items-center gap-1.5 text-gray-600">
+                  <div className="flex items-center gap-1.5 text-hilltop-gray">
                     <DollarSign size={16} />
                     <span>${brand.deliveryFee.toFixed(2)} delivery</span>
                   </div>
@@ -72,7 +72,7 @@ export default function MenuPage() {
               )}
             </div>
 
-            <p className="text-sm text-gray-600 leading-relaxed">
+            <p className="text-sm text-hilltop-gray-light leading-relaxed italic">
               {brand.specialties}
             </p>
           </motion.div>

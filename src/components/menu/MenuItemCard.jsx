@@ -60,16 +60,16 @@ export default function MenuItemCard({ item, onSelect }) {
 
       {/* Content */}
       <div className="p-4 flex flex-col gap-1.5 flex-1">
-        <h3 className="font-bold text-gray-900 text-base leading-tight">{item.name}</h3>
-        <p className="text-sm text-gray-600 flex-1 leading-relaxed line-clamp-2">
+        <h3 className="font-semibold text-hilltop-charcoal text-base leading-tight">{item.name}</h3>
+        <p className="text-sm text-hilltop-gray flex-1 leading-relaxed line-clamp-2">
           {item.description}
         </p>
         <div className="flex items-center justify-between mt-2">
-          <span className="font-bold text-gray-900 text-lg">
+          <span className="font-bold text-hilltop-charcoal text-lg">
             {formatCurrency(item.price)}
           </span>
           <button
-            className="bg-brand-primary text-white rounded-full p-2 hover:bg-brand-dark active:scale-95 transition-all shadow-sm"
+            className="bg-hilltop-green text-white rounded-full p-2 hover:bg-hilltop-green-hover active:scale-95 transition-all shadow-sm"
             aria-label={`Add ${item.name}`}
           >
             <Plus size={18} strokeWidth={2.5} />

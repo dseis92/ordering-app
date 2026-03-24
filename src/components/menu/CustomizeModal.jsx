@@ -57,11 +57,11 @@ export default function CustomizeModal({ item, onClose }) {
 
   return (
     <Modal isOpen={!!item} onClose={handleClose} title={item.name}>
-      <p className="text-gray-600 text-sm mb-6 leading-relaxed">{item.description}</p>
+      <p className="text-hilltop-gray text-sm mb-6 leading-relaxed">{item.description}</p>
 
       {item.options.map((opt) => (
         <div key={opt.id} className="mb-6 pb-6 border-b border-gray-100 last:border-0">
-          <p className="font-bold text-gray-900 mb-3">
+          <p className="font-bold text-hilltop-charcoal mb-3">
             {opt.label}{" "}
             {opt.required && (
               <span className="text-red-500 font-semibold text-xs bg-red-50 px-2 py-0.5 rounded">Required</span>
@@ -93,14 +93,14 @@ export default function CustomizeModal({ item, onClose }) {
                   onClick={toggle}
                   className={`w-full px-4 py-3 rounded-lg border-2 text-left font-medium transition-all flex items-center justify-between ${
                     selected
-                      ? "bg-brand-primary/5 border-brand-primary text-brand-primary"
-                      : "bg-white border-gray-200 text-gray-700 hover:border-gray-300"
+                      ? "bg-hilltop-green/5 border-hilltop-green text-hilltop-green"
+                      : "bg-white border-gray-200 text-hilltop-gray hover:border-gray-300"
                   }`}
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                       selected
-                        ? "border-brand-primary bg-brand-primary"
+                        ? "border-hilltop-green bg-hilltop-green"
                         : "border-gray-300"
                     }`}>
                       {selected && (
@@ -124,19 +124,19 @@ export default function CustomizeModal({ item, onClose }) {
       ))}
 
       <div className="mb-6">
-        <p className="font-bold text-gray-900 mb-3">Special Instructions</p>
+        <p className="font-bold text-hilltop-charcoal mb-3">Special Instructions</p>
         <textarea
           value={specialInstructions}
           onChange={(e) => setSpecialInstructions(e.target.value)}
           placeholder="Add a note (e.g., no pickles, extra sauce)"
           rows={3}
           maxLength={200}
-          className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-brand-primary resize-none transition-colors"
+          className="w-full border-2 border-gray-200 rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-hilltop-green resize-none transition-colors"
         />
         <p className="text-xs text-gray-400 mt-1">{specialInstructions.length}/200</p>
       </div>
 
-      <Button onClick={handleAdd} disabled={!canAdd} className="w-full mt-2 py-4 text-base bg-brand-primary hover:bg-brand-dark disabled:bg-gray-300 disabled:cursor-not-allowed">
+      <Button onClick={handleAdd} disabled={!canAdd} className="w-full mt-2 py-4 text-base bg-hilltop-green hover:bg-hilltop-green-hover disabled:bg-gray-300 disabled:cursor-not-allowed">
         Add to Cart • {formatCurrency(totalPrice)}
       </Button>
     </Modal>

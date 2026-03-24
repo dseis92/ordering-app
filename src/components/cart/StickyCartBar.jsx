@@ -25,7 +25,7 @@ export default function StickyCartBar() {
           <div className="max-w-5xl mx-auto px-4 pb-6">
             <button
               onClick={() => navigate("/checkout")}
-              className="pointer-events-auto w-full bg-brand-primary hover:bg-brand-dark text-white font-semibold rounded-xl px-6 py-4 shadow-2xl transition-all flex items-center justify-between group"
+              className="pointer-events-auto w-full bg-hilltop-green hover:bg-hilltop-green-hover text-white font-semibold rounded-xl px-6 py-4 shadow-2xl transition-all flex items-center justify-between group"
             >
               <div className="flex items-center gap-3">
                 <div className="bg-white/20 rounded-full p-2">
