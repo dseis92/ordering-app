@@ -1,0 +1,338 @@
+export const categories = [
+  { id: "all", label: "All" },
+  { id: "appetizers", label: "Appetizers" },
+  { id: "fish-fry", label: "Fish Fry" },
+  { id: "burgers", label: "Burgers & Sandwiches" },
+  { id: "dinners", label: "Dinners" },
+  { id: "salads", label: "Salads & Soup" },
+];
+
+export const menuItems = [
+  // APPETIZERS
+  {
+    id: 1,
+    category: "appetizers",
+    name: "Cheese Curds",
+    description: "Wisconsin white cheddar curds, lightly breaded and fried. Served with ranch",
+    price: 9.50,
+    image: null,
+    options: [],
+  },
+  {
+    id: 2,
+    category: "appetizers",
+    name: "Onion Rings",
+    description: "Beer-battered rings, crispy and golden",
+    price: 8.00,
+    image: null,
+    options: [],
+  },
+  {
+    id: 3,
+    category: "appetizers",
+    name: "Wings",
+    description: "Tossed in your choice of sauce: Buffalo, BBQ, Garlic Parmesan, or Dry Rub",
+    price: 12.95,
+    image: null,
+    options: [
+      {
+        id: "size",
+        label: "Size",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "6pc", label: "6 Piece", priceAdd: 0 },
+          { id: "12pc", label: "12 Piece", priceAdd: 7 },
+        ],
+      },
+      {
+        id: "sauce",
+        label: "Sauce",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "buffalo", label: "Buffalo", priceAdd: 0 },
+          { id: "bbq", label: "BBQ", priceAdd: 0 },
+          { id: "garlic-parm", label: "Garlic Parmesan", priceAdd: 0 },
+          { id: "dry-rub", label: "Dry Rub", priceAdd: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 4,
+    category: "appetizers",
+    name: "Loaded Nachos",
+    description: "Tortilla chips, cheese sauce, jalapeños, sour cream, salsa. Add chicken or beef",
+    price: 11.00,
+    image: null,
+    options: [
+      {
+        id: "protein",
+        label: "Add Protein",
+        required: false,
+        multiple: false,
+        choices: [
+          { id: "chicken", label: "Chicken", priceAdd: 3 },
+          { id: "beef", label: "Beef", priceAdd: 3 },
+        ],
+      },
+    ],
+  },
+
+  // FISH FRY (The Famous One!)
+  {
+    id: 10,
+    category: "fish-fry",
+    name: "Kathy's Famous Fish Fry",
+    description: "Our signature fish fry since the early 1980s. Beer-battered cod, hand-cut, served with coleslaw, rye bread & choice of potato",
+    price: 15.95,
+    image: null,
+    options: [
+      {
+        id: "size",
+        label: "Size",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "2pc", label: "2 Piece", priceAdd: 0 },
+          { id: "3pc", label: "3 Piece", priceAdd: 4 },
+          { id: "4pc", label: "4 Piece", priceAdd: 7 },
+        ],
+      },
+      {
+        id: "potato",
+        label: "Potato",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "fries", label: "French Fries", priceAdd: 0 },
+          { id: "baked", label: "Baked Potato", priceAdd: 0 },
+          { id: "mashed", label: "Mashed Potatoes", priceAdd: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 11,
+    category: "fish-fry",
+    name: "Perch Dinner",
+    description: "Lake perch, lightly breaded. Served with coleslaw, rye bread and your choice of potato",
+    price: 17.50,
+    image: null,
+    options: [
+      {
+        id: "potato",
+        label: "Potato",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "fries", label: "French Fries", priceAdd: 0 },
+          { id: "baked", label: "Baked Potato", priceAdd: 0 },
+          { id: "mashed", label: "Mashed Potatoes", priceAdd: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 12,
+    category: "fish-fry",
+    name: "Fish Sandwich",
+    description: "Beer-battered cod on a hoagie bun with lettuce, tomato, and tartar sauce. Comes with fries",
+    price: 11.95,
+    image: null,
+    options: [],
+  },
+
+  // BURGERS & SANDWICHES
+  {
+    id: 20,
+    category: "burgers",
+    name: "Hilltop Burger",
+    description: "Half-pound Angus beef, lettuce, tomato, onion, pickle. Add cheese for 75¢",
+    price: 10.50,
+    image: null,
+    options: [
+      {
+        id: "cheese",
+        label: "Cheese",
+        required: false,
+        multiple: false,
+        choices: [
+          { id: "american", label: "American", priceAdd: 0.75 },
+          { id: "cheddar", label: "Cheddar", priceAdd: 0.75 },
+          { id: "swiss", label: "Swiss", priceAdd: 0.75 },
+          { id: "pepper-jack", label: "Pepper Jack", priceAdd: 0.75 },
+        ],
+      },
+      {
+        id: "extras",
+        label: "Add-Ons",
+        required: false,
+        multiple: true,
+        choices: [
+          { id: "bacon", label: "Bacon", priceAdd: 2 },
+          { id: "mushrooms", label: "Sautéed Mushrooms", priceAdd: 1.50 },
+          { id: "onions", label: "Grilled Onions", priceAdd: 1 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 21,
+    category: "burgers",
+    name: "Mushroom Swiss Burger",
+    description: "Our most popular burger. Sautéed mushrooms and Swiss cheese",
+    price: 12.50,
+    image: null,
+    options: [],
+  },
+  {
+    id: 22,
+    category: "burgers",
+    name: "Bacon Cheeseburger",
+    description: "Crispy bacon, American cheese, all the fixings",
+    price: 12.95,
+    image: null,
+    options: [],
+  },
+  {
+    id: 23,
+    category: "burgers",
+    name: "Patty Melt",
+    description: "Angus beef, Swiss cheese, grilled onions on marble rye",
+    price: 11.95,
+    image: null,
+    options: [],
+  },
+  {
+    id: 24,
+    category: "burgers",
+    name: "Grilled Chicken Sandwich",
+    description: "Marinated chicken breast, lettuce, tomato, mayo. Served with fries",
+    price: 10.95,
+    image: null,
+    options: [],
+  },
+  {
+    id: 25,
+    category: "burgers",
+    name: "Philly Cheesesteak",
+    description: "Shaved ribeye, peppers, onions, provolone on a hoagie. Comes with fries",
+    price: 13.50,
+    image: null,
+    options: [],
+  },
+
+  // DINNERS
+  {
+    id: 30,
+    category: "dinners",
+    name: "12 oz Ribeye",
+    description: "Hand-cut ribeye, seasoned and grilled to order. Served with vegetable and choice of potato",
+    price: 24.95,
+    image: null,
+    options: [
+      {
+        id: "temp",
+        label: "Temperature",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "rare", label: "Rare", priceAdd: 0 },
+          { id: "med-rare", label: "Medium Rare", priceAdd: 0 },
+          { id: "medium", label: "Medium", priceAdd: 0 },
+          { id: "med-well", label: "Medium Well", priceAdd: 0 },
+          { id: "well", label: "Well Done", priceAdd: 0 },
+        ],
+      },
+      {
+        id: "potato",
+        label: "Potato",
+        required: true,
+        multiple: false,
+        choices: [
+          { id: "fries", label: "French Fries", priceAdd: 0 },
+          { id: "baked", label: "Baked Potato", priceAdd: 0 },
+          { id: "mashed", label: "Mashed Potatoes", priceAdd: 0 },
+        ],
+      },
+    ],
+  },
+  {
+    id: 31,
+    category: "dinners",
+    name: "Chicken Tenders",
+    description: "Hand-breaded tenders with fries and coleslaw. Choice of sauce",
+    price: 12.50,
+    image: null,
+    options: [],
+  },
+  {
+    id: 32,
+    category: "dinners",
+    name: "BBQ Ribs",
+    description: "Half rack of baby back ribs, slow-cooked and glazed. Served with coleslaw and fries",
+    price: 18.95,
+    image: null,
+    options: [
+      {
+        id: "size",
+        label: "Size",
+        required: false,
+        multiple: false,
+        choices: [
+          { id: "full", label: "Full Rack", priceAdd: 9 },
+        ],
+      },
+    ],
+  },
+
+  // SALADS & SOUP
+  {
+    id: 40,
+    category: "salads",
+    name: "House Salad",
+    description: "Mixed greens, tomato, cucumber, red onion, croutons. Your choice of dressing",
+    price: 6.50,
+    image: null,
+    options: [],
+  },
+  {
+    id: 41,
+    category: "salads",
+    name: "Chef Salad",
+    description: "Ham, turkey, cheese, hard-boiled egg, tomato, cucumber on mixed greens",
+    price: 11.95,
+    image: null,
+    options: [],
+  },
+  {
+    id: 42,
+    category: "salads",
+    name: "Grilled Chicken Salad",
+    description: "Marinated chicken breast over mixed greens with tomato, cucumber, cheese",
+    price: 12.50,
+    image: null,
+    options: [],
+  },
+  {
+    id: 43,
+    category: "salads",
+    name: "Soup of the Day",
+    description: "Ask about today's homemade soup. Served with crackers",
+    price: 4.95,
+    image: null,
+    options: [
+      {
+        id: "size",
+        label: "Size",
+        required: false,
+        multiple: false,
+        choices: [
+          { id: "bowl", label: "Bowl", priceAdd: 2 },
+        ],
+      },
+    ],
+  },
+];
