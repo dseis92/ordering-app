@@ -7,6 +7,7 @@ const useOrderStore = create((set) => ({
   tipPercent: 0,
   promoCode: "",
   orderNumber: null,
+  estimatedTime: null,
   status: "idle", // "idle" | "submitting" | "confirmed" | "error"
 
   setOrderType: (type) => set({ orderType: type }),
@@ -17,6 +18,7 @@ const useOrderStore = create((set) => ({
   setTipPercent: (pct) => set({ tipPercent: pct }),
   setPromoCode: (code) => set({ promoCode: code }),
   setOrderNumber: (num) => set({ orderNumber: num }),
+  setEstimatedTime: (time) => set({ estimatedTime: time }),
   setStatus: (status) => set({ status }),
 
   reset: () =>
@@ -27,6 +29,7 @@ const useOrderStore = create((set) => ({
       tipPercent: 0,
       promoCode: "",
       orderNumber: null,
+      estimatedTime: null,
       status: "idle",
     }),
 }));
