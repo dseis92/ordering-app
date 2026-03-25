@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft } from "lucide-react";
 import useCartStore from "../store/useCartStore";
 import useOrderStore from "../store/useOrderStore";
+import useOrderHistoryStore from "../store/useOrderHistoryStore";
 import OrderTypeToggle from "../components/checkout/OrderTypeToggle";
 import CustomerForm from "../components/checkout/CustomerForm";
 import DeliveryAddressForm from "../components/checkout/DeliveryAddressForm";
@@ -23,6 +24,7 @@ function CheckoutForm() {
   const setOrderNumber = useOrderStore((s) => s.setOrderNumber);
   const setStatus = useOrderStore((s) => s.setStatus);
   const setEstimatedTime = useOrderStore((s) => s.setEstimatedTime);
+  const addOrder = useOrderHistoryStore((s) => s.addOrder);
 
   const [submitting, setSubmitting] = useState(false);
   const [orderError, setOrderError] = useState(null);
@@ -97,6 +99,28 @@ function CheckoutForm() {
       setOrderNumber(data.order.orderNumber);
       setEstimatedTime(data.order.estimatedTime);
       setStatus("confirmed");
+
+      // Save order to history
+      addOrder({
+        orderNumber: data.order.orderNumber,
+        items: items.map(item => ({
+          id: item.id,
+          name: item.name,
+          price: item.totalPrice,
+          quantity: item.quantity,
+          selectedOptions: item.selectedOptions,
+        })),
+        customer: customerInfo,
+        orderType,
+        deliveryAddress: formattedDeliveryAddress,
+        notes: notes.trim() || null,
+        subtotal,
+        deliveryFee,
+        tax,
+        total,
+        estimatedTime: data.order.estimatedTime,
+      });
+
       clearCart();
       navigate("/confirmation");
     } catch (error) {

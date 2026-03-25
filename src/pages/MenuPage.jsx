@@ -6,6 +6,7 @@ import CategoryTabs from "../components/menu/CategoryTabs";
 import MenuGrid from "../components/menu/MenuGrid";
 import CustomizeModal from "../components/menu/CustomizeModal";
 import StickyCartBar from "../components/cart/StickyCartBar";
+import DailySpecialsBanner from "../components/menu/DailySpecialsBanner";
 import brand from "../brand.config";
 import useOrderStore from "../store/useOrderStore";
 
@@ -164,7 +165,7 @@ export default function MenuPage() {
 
         <div className="max-w-5xl mx-auto px-4 py-6">
           {/* Search */}
-          <div className="relative mb-4">
+          <div className="relative mb-6">
             <Search
               size={18}
               className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
@@ -185,6 +186,9 @@ export default function MenuPage() {
               </button>
             )}
           </div>
+
+          {/* Daily Specials Banner — hide when searching */}
+          {!query && <DailySpecialsBanner onCategoryChange={handleCategoryChange} />}
         </div>
 
         {/* Category tabs — hide when searching */}
