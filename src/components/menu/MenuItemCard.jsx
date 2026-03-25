@@ -30,10 +30,10 @@ export default function MenuItemCard({ item, onSelect }) {
     <motion.div
       whileTap={{ scale: 0.98 }}
       onClick={() => onSelect(item)}
-      className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all cursor-pointer flex flex-col group"
+      className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all cursor-pointer flex flex-col group h-full"
     >
       {/* Image / Placeholder */}
-      <div className={`relative h-44 bg-gradient-to-br ${bg} flex items-center justify-center overflow-hidden`}>
+      <div className={`relative h-36 sm:h-40 md:h-44 bg-gradient-to-br ${bg} flex items-center justify-center overflow-hidden`}>
         {showPhoto && (
           <>
             {!imgLoaded && (
@@ -52,27 +52,29 @@ export default function MenuItemCard({ item, onSelect }) {
           </>
         )}
         {!showPhoto && (
-          <span className="text-6xl select-none group-hover:scale-110 transition-transform">
+          <span className="text-5xl sm:text-6xl select-none group-hover:scale-110 transition-transform">
             {CATEGORY_EMOJI[item.category] ?? "🍽️"}
           </span>
         )}
       </div>
 
       {/* Content */}
-      <div className="p-4 flex flex-col gap-1.5 flex-1">
-        <h3 className="font-semibold text-hilltop-charcoal text-base leading-tight">{item.name}</h3>
-        <p className="text-sm text-hilltop-gray flex-1 leading-relaxed line-clamp-2">
+      <div className="p-3 sm:p-4 flex flex-col gap-1.5 flex-1">
+        <h3 className="font-semibold text-hilltop-charcoal text-sm sm:text-base leading-tight line-clamp-2">
+          {item.name}
+        </h3>
+        <p className="text-xs sm:text-sm text-hilltop-gray flex-1 leading-relaxed line-clamp-2">
           {item.description}
         </p>
-        <div className="flex items-center justify-between mt-2">
-          <span className="font-bold text-hilltop-charcoal text-lg">
+        <div className="flex items-center justify-between mt-1 sm:mt-2">
+          <span className="font-bold text-hilltop-charcoal text-base sm:text-lg">
             {formatCurrency(item.price)}
           </span>
           <button
-            className="bg-hilltop-green text-white rounded-full p-2 hover:bg-hilltop-green-hover active:scale-95 transition-all shadow-sm"
+            className="bg-hilltop-green text-white rounded-full p-1.5 sm:p-2 hover:bg-hilltop-green-hover active:scale-95 transition-all shadow-sm flex-shrink-0"
             aria-label={`Add ${item.name}`}
           >
-            <Plus size={18} strokeWidth={2.5} />
+            <Plus size={16} className="sm:w-[18px] sm:h-[18px]" strokeWidth={2.5} />
           </button>
         </div>
       </div>

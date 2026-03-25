@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 body {
-  @apply bg-hilltop-bg-light text-hilltop-charcoal;
+  background-color: #f6f6f6;
+  color: #1b1b1b;
 }

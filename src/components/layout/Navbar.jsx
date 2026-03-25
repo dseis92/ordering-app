@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
-import brand from "../../brand.config";
-import useCartStore from "../../store/useCartStore";
-import Badge from "../ui/Badge";
+import { Link } from 'react-router-dom';
+import { ShoppingCart } from 'lucide-react';
+import brand from '../../brand.config';
+import useCartStore from '../../store/useCartStore';
+import Badge from '../ui/Badge';
 
 export default function Navbar() {
   const items = useCartStore((s) => s.items);
@@ -12,9 +12,16 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 bg-white border-b border-gray-200 z-40 shadow-sm">
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-        <Link to="/" className="font-display font-bold text-xl text-hilltop-charcoal hover:text-hilltop-green transition-colors">
+        <Link
+          to="/"
+          className="font-display font-bold text-xl text-hilltop-charcoal hover:text-hilltop-green transition-colors"
+        >
           {brand.logo ? (
-            <img src={brand.logo} alt={brand.name} className="h-8" />
+            <img
+              src={brand.logo}
+              alt={brand.name}
+              className="h-10 object-contain"
+            />
           ) : (
             <span>{brand.name}</span>
           )}
@@ -24,7 +31,10 @@ export default function Navbar() {
           className="relative p-2.5 rounded-full hover:bg-hilltop-green/10 transition-colors group"
           aria-label="Open cart"
         >
-          <ShoppingCart size={22} className="text-hilltop-gray group-hover:text-hilltop-green transition-colors" />
+          <ShoppingCart
+            size={22}
+            className="text-hilltop-gray group-hover:text-hilltop-green transition-colors"
+          />
           {itemCount > 0 && (
             <span className="absolute -top-1 -right-1 bg-hilltop-green text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md">
               {itemCount}

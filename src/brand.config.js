@@ -1,7 +1,7 @@
 const brand = {
   name: "Hilltop Pub and Grill",
   tagline: "Stevens Point's favorite since the 1980s",
-  logo: null, // set to a path like "/logo.svg" to use an image
+  logo: "/images/hilltop-logo.png",
   colors: {
     primary: "#0a4f39",   // Hilltop deep forest green
     accent: "#11694d",    // Hilltop lighter green
