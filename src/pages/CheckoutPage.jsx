@@ -5,6 +5,7 @@ import { ChevronLeft } from "lucide-react";
 import useCartStore from "../store/useCartStore";
 import useOrderStore from "../store/useOrderStore";
 import useOrderHistoryStore from "../store/useOrderHistoryStore";
+import useLoyaltyStore from "../store/useLoyaltyStore";
 import OrderTypeToggle from "../components/checkout/OrderTypeToggle";
 import CustomerForm from "../components/checkout/CustomerForm";
 import DeliveryAddressForm from "../components/checkout/DeliveryAddressForm";
@@ -25,6 +26,7 @@ function CheckoutForm() {
   const setStatus = useOrderStore((s) => s.setStatus);
   const setEstimatedTime = useOrderStore((s) => s.setEstimatedTime);
   const addOrder = useOrderHistoryStore((s) => s.addOrder);
+  const addPoints = useLoyaltyStore((s) => s.addPoints);
 
   const [submitting, setSubmitting] = useState(false);
   const [orderError, setOrderError] = useState(null);
@@ -120,6 +122,10 @@ function CheckoutForm() {
         total,
         estimatedTime: data.order.estimatedTime,
       });
+
+      // Add loyalty points
+      const pointsEarned = addPoints(total);
+      console.log(`Earned ${pointsEarned} loyalty points!`);
 
       clearCart();
       navigate("/confirmation");

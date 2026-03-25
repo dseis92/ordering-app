@@ -6,6 +6,8 @@ import CheckoutPage from "./pages/CheckoutPage";
 import ConfirmationPage from "./pages/ConfirmationPage";
 import OrderHistoryPage from "./pages/OrderHistoryPage";
 import AboutPage from "./pages/AboutPage";
+import CateringPage from "./pages/CateringPage";
+import RewardsPage from "./pages/RewardsPage";
 
 export default function App() {
   return (
@@ -22,7 +24,9 @@ export default function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/confirmation" element={<ConfirmationPage />} />
           <Route path="/orders" element={<OrderHistoryPage />} />
+          <Route path="/rewards" element={<RewardsPage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/catering" element={<CateringPage />} />
         </Route>
       </Routes>
     </BrowserRouter>

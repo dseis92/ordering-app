@@ -1,8 +1,9 @@
 import { Link, useLocation } from 'react-router-dom';
-import { ShoppingCart, Clock, Info } from 'lucide-react';
+import { ShoppingCart, Clock, Info, UtensilsCrossed, Gift } from 'lucide-react';
 import brand from '../../brand.config';
 import useCartStore from '../../store/useCartStore';
 import useOrderHistoryStore from '../../store/useOrderHistoryStore';
+import useLoyaltyStore from '../../store/useLoyaltyStore';
 import Badge from '../ui/Badge';
 
 export default function Navbar() {
@@ -10,9 +11,12 @@ export default function Navbar() {
   const items = useCartStore((s) => s.items);
   const toggleCart = useCartStore((s) => s.toggleCart);
   const orders = useOrderHistoryStore((s) => s.orders);
+  const points = useLoyaltyStore((s) => s.points);
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
 
   const navLinks = [
+    { path: '/catering', label: 'Catering', icon: UtensilsCrossed },
+    { path: '/rewards', label: 'Rewards', icon: Gift, badge: points > 0 ? points : null },
     { path: '/orders', label: 'Orders', icon: Clock, badge: orders.length },
     { path: '/about', label: 'About', icon: Info },
   ];
