@@ -22,12 +22,12 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 bg-white border-b border-gray-200 z-40 shadow-sm">
+    <nav className="sticky top-0 bg-hilltop-green border-b border-hilltop-green-hover z-40 shadow-md">
       <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link
           to="/"
-          className="font-display font-bold text-xl text-hilltop-charcoal hover:text-hilltop-green transition-colors"
+          className="font-display font-bold text-xl text-white hover:text-white/90 transition-colors"
         >
           {brand.logo ? (
             <img
@@ -51,15 +51,15 @@ export default function Navbar() {
                 to={link.path}
                 className={`relative flex items-center gap-1.5 px-3 py-2 rounded-lg transition-colors ${
                   isActive
-                    ? 'bg-hilltop-green text-white'
-                    : 'text-hilltop-gray hover:bg-hilltop-green/10 hover:text-hilltop-green'
+                    ? 'bg-white text-hilltop-green'
+                    : 'text-white/90 hover:bg-white/20 hover:text-white'
                 }`}
               >
                 <Icon size={18} />
                 <span className="hidden sm:inline text-sm font-medium">{link.label}</span>
                 {link.badge > 0 && (
                   <span className={`text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center ${
-                    isActive ? 'bg-white text-hilltop-green' : 'bg-hilltop-green text-white'
+                    isActive ? 'bg-hilltop-green text-white' : 'bg-white text-hilltop-green'
                   }`}>
                     {link.badge}
                   </span>
@@ -71,15 +71,15 @@ export default function Navbar() {
           {/* Cart Button */}
           <button
             onClick={toggleCart}
-            className="relative p-2.5 rounded-full hover:bg-hilltop-green/10 transition-colors group"
+            className="relative p-2.5 rounded-full hover:bg-white/20 transition-colors group"
             aria-label="Open cart"
           >
             <ShoppingCart
               size={22}
-              className="text-hilltop-gray group-hover:text-hilltop-green transition-colors"
+              className="text-white/90 group-hover:text-white transition-colors"
             />
             {itemCount > 0 && (
-              <span className="absolute -top-1 -right-1 bg-hilltop-green text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md">
+              <span className="absolute -top-1 -right-1 bg-white text-hilltop-green text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md">
                 {itemCount}
               </span>
             )}
