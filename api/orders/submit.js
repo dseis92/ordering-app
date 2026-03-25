@@ -177,7 +177,7 @@ export default async function handler(req, res) {
     // Send email to restaurant
     const restaurantEmail = await resend.emails.send({
       from: 'Hilltop Orders <orders@resend.dev>', // Update with your verified domain
-      to: process.env.RESTAURANT_EMAIL || 'orders@hilltoppubandgrill.com',
+      to: process.env.RESTRAUNT_EMAIL || 'orders@hilltoppubandgrill.com',
       subject: `🔔 New ${order.orderType === 'delivery' ? 'Delivery' : 'Pickup'} Order #${order.orderNumber}`,
       html: createRestaurantEmail(order),
     });
