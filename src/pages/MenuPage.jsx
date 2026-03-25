@@ -11,7 +11,7 @@ import brand from "../brand.config";
 import useOrderStore from "../store/useOrderStore";
 
 export default function MenuPage() {
-  const [activeCategory, setActiveCategory] = useState("all");
+  const [activeCategory, setActiveCategory] = useState("top-picks");
   const [selectedItem, setSelectedItem] = useState(null);
   const [query, setQuery] = useState("");
   const orderType = useOrderStore((s) => s.orderType);
@@ -19,7 +19,9 @@ export default function MenuPage() {
 
   const filtered = menuItems.filter((item) => {
     const matchesCategory =
-      activeCategory === "all" || item.category === activeCategory;
+      activeCategory === "all" ||
+      (activeCategory === "top-picks" && item.featured) ||
+      item.category === activeCategory;
     const q = query.trim().toLowerCase();
     const matchesQuery =
       !q ||
