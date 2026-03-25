@@ -25,7 +25,7 @@ export default function Modal({ isOpen, onClose, children, title }) {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
-            className="fixed inset-x-4 bottom-0 sm:inset-auto sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2 sm:w-full sm:max-w-lg bg-white rounded-t-3xl sm:rounded-3xl z-50 max-h-[85vh] overflow-y-auto"
+            className="fixed inset-x-4 top-1/2 -translate-y-1/2 sm:inset-auto sm:left-1/2 sm:-translate-x-1/2 sm:w-full sm:max-w-lg bg-white rounded-3xl z-50 max-h-[90vh] overflow-y-auto shadow-2xl"
           >
             <div className="p-6">
               {title && (
