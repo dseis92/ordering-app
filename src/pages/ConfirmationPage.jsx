@@ -4,7 +4,9 @@ import { motion } from "framer-motion";
 import confetti from "canvas-confetti";
 import { CheckCircle, Clock, Phone, MapPin } from "lucide-react";
 import useOrderStore from "../store/useOrderStore";
+import useOrderStatusStore from "../store/useOrderStatusStore";
 import useCartStore from "../store/useCartStore";
+import OrderTracker from "../components/order/OrderTracker";
 import brand from "../brand.config";
 import Button from "../components/ui/Button";
 
@@ -15,14 +17,35 @@ export default function ConfirmationPage() {
   const estimatedTime = useOrderStore((s) => s.estimatedTime);
   const customerInfo = useOrderStore((s) => s.customerInfo);
   const reset = useOrderStore((s) => s.reset);
+  const updateOrderStatus = useOrderStatusStore((s) => s.updateOrderStatus);
 
   useEffect(() => {
     if (!orderNumber) {
       navigate("/");
       return;
     }
+
+    // Initialize order tracking with "received" status
+    updateOrderStatus(orderNumber, "received", estimatedTime);
+
+    // Fire confetti
     confetti({ particleCount: 160, spread: 80, origin: { y: 0.5 } });
-  }, [orderNumber, navigate]);
+
+    // Simulate order progression (for demo purposes)
+    // In production, this would come from the backend via websockets or polling
+    const timeout1 = setTimeout(() => {
+      updateOrderStatus(orderNumber, "preparing", estimatedTime - 10);
+    }, 30000); // After 30 seconds, mark as preparing
+
+    const timeout2 = setTimeout(() => {
+      updateOrderStatus(orderNumber, "ready", 5);
+    }, 60000); // After 1 minute, mark as ready
+
+    return () => {
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+    };
+  }, [orderNumber, estimatedTime, navigate, updateOrderStatus]);
 
   const handleDone = () => {
     reset();
@@ -57,6 +80,12 @@ export default function ConfirmationPage() {
       <div className="bg-hilltop-green text-white rounded-xl p-6 mb-6 text-center">
         <p className="text-sm font-medium opacity-90 mb-1">Order Number</p>
         <p className="text-3xl font-bold">{orderNumber}</p>
+      </div>
+
+      {/* Order Tracking */}
+      <div className="mb-6">
+        <h2 className="text-xl font-bold text-hilltop-charcoal mb-4">Track Your Order</h2>
+        <OrderTracker orderNumber={orderNumber} />
       </div>
 
       {/* Order Details */}
