@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Search, X, Star, Clock, DollarSign, Phone, Truck } from "lucide-react";
-import { menuItems } from "../data/menu";
 import CategoryTabs from "../components/menu/CategoryTabs";
 import MenuGrid from "../components/menu/MenuGrid";
 import CustomizeModal from "../components/menu/CustomizeModal";
@@ -9,6 +8,7 @@ import StickyCartBar from "../components/cart/StickyCartBar";
 import DailySpecialsBanner from "../components/menu/DailySpecialsBanner";
 import brand from "../brand.config";
 import useOrderStore from "../store/useOrderStore";
+import useMenuStore from "../store/useMenuStore";
 
 export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState("top-picks");
@@ -16,6 +16,7 @@ export default function MenuPage() {
   const [query, setQuery] = useState("");
   const orderType = useOrderStore((s) => s.orderType);
   const setOrderType = useOrderStore((s) => s.setOrderType);
+  const menuItems = useMenuStore((s) => s.getItems());
 
   const filtered = menuItems.filter((item) => {
     const matchesCategory =

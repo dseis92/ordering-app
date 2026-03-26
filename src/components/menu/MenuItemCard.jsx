@@ -25,13 +25,25 @@ export default function MenuItemCard({ item, onSelect }) {
 
   const showPhoto = item.image && !imgError;
   const bg = CATEGORY_BG[item.category] ?? "from-gray-100 to-gray-50";
+  const isSoldOut = item.soldOut;
 
   return (
     <motion.div
-      whileTap={{ scale: 0.98 }}
-      onClick={() => onSelect(item)}
-      className="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg hover:border-gray-300 transition-all cursor-pointer flex flex-col group h-full"
+      whileTap={{ scale: isSoldOut ? 1 : 0.98 }}
+      onClick={() => !isSoldOut && onSelect(item)}
+      className={`bg-white rounded-xl overflow-hidden border border-gray-200 transition-all flex flex-col group h-full relative ${
+        isSoldOut
+          ? 'opacity-60 cursor-not-allowed'
+          : 'hover:shadow-lg hover:border-gray-300 cursor-pointer'
+      }`}
     >
+      {/* Sold Out Badge */}
+      {isSoldOut && (
+        <div className="absolute top-3 right-3 bg-red-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg z-10">
+          SOLD OUT
+        </div>
+      )}
+
       {/* Image / Placeholder */}
       <div className={`relative h-36 sm:h-40 md:h-44 bg-gradient-to-br ${bg} flex items-center justify-center overflow-hidden`}>
         {showPhoto && (

@@ -8,6 +8,10 @@ import OrderHistoryPage from "./pages/OrderHistoryPage";
 import AboutPage from "./pages/AboutPage";
 import CateringPage from "./pages/CateringPage";
 import RewardsPage from "./pages/RewardsPage";
+import AdminLoginPage from "./pages/admin/AdminLoginPage";
+import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
+import AdminMenuManagementPage from "./pages/admin/AdminMenuManagementPage";
+import ProtectedRoute from "./components/admin/ProtectedRoute";
 
 export default function App() {
   return (
@@ -19,6 +23,7 @@ export default function App() {
         }}
       />
       <Routes>
+        {/* Public Routes */}
         <Route element={<Layout />}>
           <Route path="/" element={<MenuPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
@@ -28,6 +33,25 @@ export default function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/catering" element={<CateringPage />} />
         </Route>
+
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute>
+              <AdminDashboardPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/menu"
+          element={
+            <ProtectedRoute>
+              <AdminMenuManagementPage />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
