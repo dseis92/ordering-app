@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { motion } from "framer-motion";
 import { Search, X, Star, Clock, DollarSign, Phone, Truck } from "lucide-react";
 import CategoryTabs from "../components/menu/CategoryTabs";
@@ -6,9 +6,12 @@ import MenuGrid from "../components/menu/MenuGrid";
 import CustomizeModal from "../components/menu/CustomizeModal";
 import StickyCartBar from "../components/cart/StickyCartBar";
 import DailySpecialsBanner from "../components/menu/DailySpecialsBanner";
+import ScrollMorphHero from "../components/ui/scroll-morph-hero";
 import brand from "../brand.config";
 import useOrderStore from "../store/useOrderStore";
 import useMenuStore from "../store/useMenuStore";
+import { syncMenuToDatabase } from "../services/menu";
+import { menuItems as defaultMenuItems } from "../data/menu";
 
 export default function MenuPage() {
   const [activeCategory, setActiveCategory] = useState("top-picks");
@@ -16,7 +19,30 @@ export default function MenuPage() {
   const [query, setQuery] = useState("");
   const orderType = useOrderStore((s) => s.orderType);
   const setOrderType = useOrderStore((s) => s.setOrderType);
-  const menuItems = useMenuStore((s) => s.getItems());
+
+  // Subscribe to menu store properly to avoid infinite renders
+  const items = useMenuStore((s) => s.items);
+  const soldOutItems = useMenuStore((s) => s.soldOutItems);
+
+  // Compute menu items with sold-out status
+  const menuItems = useMemo(() => {
+    return items.map((item) => ({
+      ...item,
+      soldOut: soldOutItems.includes(item.id),
+    }));
+  }, [items, soldOutItems]);
+
+  // Sync menu to Supabase on first load
+  useEffect(() => {
+    const syncMenu = async () => {
+      try {
+        await syncMenuToDatabase(defaultMenuItems);
+      } catch (error) {
+        console.error('Error syncing menu to database:', error);
+      }
+    };
+    syncMenu();
+  }, []);
 
   const filtered = menuItems.filter((item) => {
     const matchesCategory =
@@ -56,76 +82,54 @@ export default function MenuPage() {
 
   return (
     <div className="bg-hilltop-bg-light min-h-screen pb-32">
-      {/* ================= HERO SECTION ================= */}
-      <section className="relative w-full h-[70vh] flex items-center justify-center">
-        {/* Background Image */}
-        <img
-          src="/images/hilltop-hero-image.png"
-          alt="Hilltop Pub and Grill"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+      {/* ================= SCROLL MORPH HERO SECTION ================= */}
+      <section className="relative w-full h-[80vh] min-h-[600px]">
+        <ScrollMorphHero />
 
-        {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70"></div>
-
-        {/* Content */}
-        <div className="relative z-10 text-center px-6 max-w-4xl">
-          <motion.div
+        {/* Action Buttons Overlay */}
+        <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col sm:flex-row gap-5 justify-center px-6 pointer-events-none">
+          <motion.button
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ delay: 3, duration: 0.6 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleOrderOnline}
+            className="pointer-events-auto bg-hilltop-green hover:bg-hilltop-green-hover text-white px-12 py-5 rounded-2xl text-lg font-bold transition-all shadow-2xl flex items-center justify-center gap-3"
           >
-            <h1 className="text-white text-5xl md:text-7xl font-display font-bold mb-4">
-              Hilltop Pub and Grill
-            </h1>
+            <span>Order Online</span>
+          </motion.button>
 
-            <p className="text-gray-200 text-xl md:text-2xl mb-3 font-light">
-              Stevens Point's favorite since the 1980s
-            </p>
+          <motion.a
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 3.1, duration: 0.6 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            href={`tel:${brand.phone.replace(/\D/g, '')}`}
+            className="pointer-events-auto bg-white text-hilltop-charcoal px-12 py-5 rounded-2xl text-lg font-bold hover:bg-gray-100 transition-all shadow-2xl flex items-center justify-center gap-3"
+          >
+            <Phone size={24} />
+            <span>Call Us</span>
+          </motion.a>
 
-            <p className="text-gray-300 text-lg md:text-xl mb-10 italic">
-              {brand.specialties}
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {/* ORDER ONLINE */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleOrderOnline}
-                className="bg-hilltop-green hover:bg-hilltop-green-hover text-white px-8 py-4 rounded-xl font-semibold transition-all shadow-lg flex items-center justify-center gap-2"
-              >
-                <span>Order Online</span>
-              </motion.button>
-
-              {/* CALL */}
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                href={`tel:${brand.phone.replace(/\D/g, '')}`}
-                className="bg-white text-hilltop-charcoal px-8 py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all shadow-lg flex items-center justify-center gap-2"
-              >
-                <Phone size={20} />
-                <span>Call Us</span>
-              </motion.a>
-
-              {/* DELIVERY */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleDelivery}
-                className="bg-transparent text-white px-8 py-4 rounded-xl font-semibold border-2 border-white hover:bg-white hover:text-hilltop-charcoal transition-all shadow-lg flex items-center justify-center gap-2"
-              >
-                <Truck size={20} />
-                <span>Get Delivery</span>
-              </motion.button>
-            </div>
-          </motion.div>
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 3.2, duration: 0.6 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleDelivery}
+            className="pointer-events-auto bg-amber-500 hover:bg-amber-600 text-white px-12 py-5 rounded-2xl text-lg font-bold transition-all shadow-2xl flex items-center justify-center gap-3"
+          >
+            <Truck size={24} />
+            <span>Get Delivery</span>
+          </motion.button>
         </div>
       </section>
 
       {/* ================= MENU SECTION ================= */}
-      <div id="menu-section">
+      <div id="menu-section" className="mt-16">
         {/* Restaurant Info Header */}
         <div className="bg-white border-b border-gray-200 shadow-sm">
           <div className="max-w-5xl mx-auto px-4 py-6">

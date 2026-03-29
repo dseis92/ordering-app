@@ -1,21 +1,17 @@
-import { AnimatePresence, motion } from "framer-motion";
-import MenuItemCard from "./MenuItemCard";
+import { AnimatePresence } from "framer-motion";
+import { StackCard } from "../ui/stack-card";
 
 export default function MenuGrid({ items, onSelectItem }) {
   return (
-    <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5">
+    <div className="w-full max-w-2xl mx-auto pb-24">
       <AnimatePresence mode="popLayout">
-        {items.map((item) => (
-          <motion.div
+        {items.map((item, index) => (
+          <StackCard
             key={item.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            layout
-            className="w-full"
-          >
-            <MenuItemCard item={item} onSelect={onSelectItem} />
-          </motion.div>
+            item={item}
+            onSelect={onSelectItem}
+            index={index}
+          />
         ))}
       </AnimatePresence>
     </div>
