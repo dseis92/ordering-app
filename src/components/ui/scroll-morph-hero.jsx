@@ -326,7 +326,7 @@ export default function ScrollMorphHero() {
                 x: Math.cos(arcRad) * arcRadius + parallaxValue,
                 y: Math.sin(arcRad) * arcRadius + arcCenterY,
                 rotation: currentArcAngle + 90,
-                scale: isMobile ? 1.8 : 2.4,
+                scale: isMobile ? 1.2 : 2.4,
               };
 
               target = {
