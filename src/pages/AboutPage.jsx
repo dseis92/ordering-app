@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { MapPin, Phone, Clock, Mail, Award, Users, Heart } from "lucide-react";
+import { Award, Users, Heart } from "lucide-react";
 import brand from "../brand.config";
+import LocationMap from "../components/location/LocationMap";
 
 export default function AboutPage() {
   return (
@@ -127,75 +128,8 @@ export default function AboutPage() {
         </motion.div>
       </section>
 
-      {/* Contact Info */}
-      <section className="bg-hilltop-green text-white py-12 sm:py-16">
-        <div className="max-w-4xl mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-3xl sm:text-4xl font-display font-bold mb-8 text-center">
-              Visit Us
-            </h2>
-            <div className="grid sm:grid-cols-2 gap-6">
-              <div className="flex items-start gap-4">
-                <MapPin size={24} className="flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-bold text-lg mb-1">Location</h3>
-                  <p className="text-white/90">{brand.address}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <Phone size={24} className="flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-bold text-lg mb-1">Phone</h3>
-                  <a
-                    href={`tel:${brand.phone.replace(/\D/g, '')}`}
-                    className="text-white/90 hover:text-white transition-colors"
-                  >
-                    {brand.phone}
-                  </a>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <Clock size={24} className="flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-bold text-lg mb-1">Hours</h3>
-                  <p className="text-white/90">{brand.hours}</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4">
-                <Mail size={24} className="flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="font-bold text-lg mb-1">Website</h3>
-                  <a
-                    href="https://hilltoppubandgrill.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-white/90 hover:text-white transition-colors"
-                  >
-                    hilltoppubandgrill.com
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-8 pt-8 border-t border-white/20 text-center">
-              <p className="text-white/90 mb-4">
-                We look forward to serving you soon!
-              </p>
-              <a
-                href="/"
-                className="inline-block bg-white text-hilltop-green px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
-              >
-                Order Online
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      {/* Location Map Section */}
+      <LocationMap />
     </div>
   );
 }

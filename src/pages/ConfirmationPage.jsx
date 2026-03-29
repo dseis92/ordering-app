@@ -110,7 +110,7 @@ export default function ConfirmationPage() {
             <div>
               <p className="font-semibold text-hilltop-charcoal">Pickup Location</p>
               <p className="text-hilltop-gray">{brand.name}</p>
-              <p className="text-hilltop-gray">{brand.address}</p>
+              <p className="text-hilltop-gray">{brand.address.full}</p>
             </div>
           </div>
         ) : (

@@ -10,14 +10,14 @@ export default function Footer() {
         </div>
         <div>
           <p className="font-bold text-white mb-2 text-base">Location</p>
-          <p className="leading-relaxed">{brand.address}</p>
+          <p className="leading-relaxed">{brand.address.full}</p>
         </div>
         <div>
           <p className="font-bold text-white mb-2 text-base">Contact &amp; Hours</p>
           <a href={`tel:${brand.phone.replace(/\D/g, '')}`} className="block text-hilltop-green hover:text-hilltop-green-hover transition-colors font-semibold">
             {brand.phone}
           </a>
-          <p className="mt-2 leading-relaxed">{brand.hours}</p>
+          <p className="mt-2 leading-relaxed">{brand.hours.display}</p>
         </div>
       </div>
       <div className="max-w-5xl mx-auto px-4 mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/60">
