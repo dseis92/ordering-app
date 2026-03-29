@@ -13,7 +13,10 @@ export const AnimationPhase = {
 const IMG_WIDTH = 140;
 const IMG_HEIGHT = 200;
 
-function FlipCard({ src, index, total, phase, target }) {
+function FlipCard({ src, index, total, phase, target, isMobile }) {
+  const cardWidth = isMobile ? IMG_WIDTH * 0.6 : IMG_WIDTH;
+  const cardHeight = isMobile ? IMG_HEIGHT * 0.6 : IMG_HEIGHT;
+
   return (
     <motion.div
       animate={{
@@ -30,8 +33,8 @@ function FlipCard({ src, index, total, phase, target }) {
       }}
       style={{
         position: "absolute",
-        width: IMG_WIDTH,
-        height: IMG_HEIGHT,
+        width: cardWidth,
+        height: cardHeight,
         transformStyle: "preserve-3d",
         perspective: "1000px",
       }}
@@ -239,7 +242,7 @@ export default function ScrollMorphHero() {
     <div ref={containerRef} className="relative w-full h-full bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 overflow-hidden">
       <div className="flex h-full w-full flex-col items-center justify-center perspective-1000">
         {/* Intro Text (Fades out) */}
-        <div className="absolute z-0 flex flex-col items-center justify-center text-center pointer-events-none top-1/2 -translate-y-1/2">
+        <div className="absolute z-0 flex flex-col items-center justify-center text-center pointer-events-none top-[20%] md:top-1/2 md:-translate-y-1/2">
           <motion.h1
             initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
             animate={
@@ -248,7 +251,7 @@ export default function ScrollMorphHero() {
                 : { opacity: 0, filter: "blur(10px)" }
             }
             transition={{ duration: 1 }}
-            className="text-3xl md:text-5xl font-display font-bold tracking-tight text-hilltop-charcoal"
+            className="text-2xl md:text-5xl font-display font-bold tracking-tight text-hilltop-charcoal px-4"
           >
             Hilltop Pub and Grill
           </motion.h1>
@@ -269,12 +272,12 @@ export default function ScrollMorphHero() {
         {/* Arc Active Content (Fades in) */}
         <motion.div
           style={{ opacity: contentOpacity, y: contentY }}
-          className="absolute top-[8%] z-10 flex flex-col items-center justify-center text-center pointer-events-none px-4"
+          className="absolute top-[5%] md:top-[8%] z-10 flex flex-col items-center justify-center text-center pointer-events-none px-6"
         >
-          <h2 className="text-3xl md:text-6xl font-display font-bold text-hilltop-charcoal tracking-tight mb-4">
+          <h2 className="text-2xl md:text-6xl font-display font-bold text-hilltop-charcoal tracking-tight mb-3">
             Stevens Point's Favorite
           </h2>
-          <p className="text-sm md:text-lg text-hilltop-gray max-w-2xl leading-relaxed font-medium">
+          <p className="text-xs md:text-lg text-hilltop-gray max-w-2xl leading-relaxed font-medium">
             Famous for Kathy Mitchell's fish fry since the early 1980s — served daily!
             <br className="hidden md:block" />
             Explore our handcrafted menu of gastropub classics.
@@ -284,6 +287,7 @@ export default function ScrollMorphHero() {
         {/* Main Container */}
         <div className="relative flex items-center justify-center w-full h-full">
           {IMAGES.slice(0, TOTAL_IMAGES).map((src, i) => {
+            const isMobile = containerSize.width < 768;
             let target = { x: 0, y: 0, rotation: 0, scale: 1, opacity: 1 };
 
             if (introPhase === "scatter") {
@@ -294,7 +298,6 @@ export default function ScrollMorphHero() {
               const lineX = i * lineSpacing - lineTotalWidth / 2;
               target = { x: lineX, y: 0, rotation: 0, scale: 1, opacity: 1 };
             } else {
-              const isMobile = containerSize.width < 768;
               const minDimension = Math.min(containerSize.width, containerSize.height);
 
               const circleRadius = Math.min(minDimension * 0.35, 350);
@@ -307,11 +310,11 @@ export default function ScrollMorphHero() {
               };
 
               const baseRadius = Math.min(containerSize.width, containerSize.height * 1.5);
-              const arcRadius = baseRadius * (isMobile ? 1.6 : 1.1);
-              const arcApexY = containerSize.height * (isMobile ? 0.35 : 0.25);
+              const arcRadius = baseRadius * (isMobile ? 1.8 : 1.1);
+              const arcApexY = containerSize.height * (isMobile ? 0.5 : 0.25);
               const arcCenterY = arcApexY + arcRadius;
 
-              const spreadAngle = isMobile ? 120 : 130;
+              const spreadAngle = isMobile ? 140 : 130;
               const startAngle = -90 - spreadAngle / 2;
               const step = spreadAngle / (TOTAL_IMAGES - 1);
 
@@ -326,7 +329,7 @@ export default function ScrollMorphHero() {
                 x: Math.cos(arcRad) * arcRadius + parallaxValue,
                 y: Math.sin(arcRad) * arcRadius + arcCenterY,
                 rotation: currentArcAngle + 90,
-                scale: isMobile ? 0.75 : 2.4,
+                scale: isMobile ? 0.5 : 2.4,
               };
 
               target = {
@@ -346,6 +349,7 @@ export default function ScrollMorphHero() {
                 total={TOTAL_IMAGES}
                 phase={introPhase}
                 target={target}
+                isMobile={isMobile}
               />
             );
           })}
