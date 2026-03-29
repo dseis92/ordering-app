@@ -307,11 +307,11 @@ export default function ScrollMorphHero() {
               };
 
               const baseRadius = Math.min(containerSize.width, containerSize.height * 1.5);
-              const arcRadius = baseRadius * (isMobile ? 1.4 : 1.1);
+              const arcRadius = baseRadius * (isMobile ? 1.6 : 1.1);
               const arcApexY = containerSize.height * (isMobile ? 0.35 : 0.25);
               const arcCenterY = arcApexY + arcRadius;
 
-              const spreadAngle = isMobile ? 100 : 130;
+              const spreadAngle = isMobile ? 120 : 130;
               const startAngle = -90 - spreadAngle / 2;
               const step = spreadAngle / (TOTAL_IMAGES - 1);
 
@@ -326,7 +326,7 @@ export default function ScrollMorphHero() {
                 x: Math.cos(arcRad) * arcRadius + parallaxValue,
                 y: Math.sin(arcRad) * arcRadius + arcCenterY,
                 rotation: currentArcAngle + 90,
-                scale: isMobile ? 1.2 : 2.4,
+                scale: isMobile ? 0.75 : 2.4,
               };
 
               target = {
