@@ -169,7 +169,7 @@ export default function ParticleTextHero({ words = [] }) {
 
     // Responsive font size based on canvas width
     const isMobile = canvas.width < 768;
-    const fontSize = isMobile ? Math.min(canvas.width / 8, 40) : Math.min(canvas.width / 10, 80);
+    const fontSize = isMobile ? Math.min(canvas.width / 10, 32) : Math.min(canvas.width / 10, 80);
     const pixelSteps = isMobile ? 7 : 6;
 
     offscreenCtx.fillStyle = 'white';

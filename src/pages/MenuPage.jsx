@@ -92,8 +92,7 @@ export default function MenuPage() {
       <section className="relative w-full h-[60vh] sm:h-[70vh] lg:h-[80vh] min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
         <ParticleTextHero
           words={[
-            brand.name,
-            "FAMOUS FISH FRY",
+            "HILLTOP PUB & GRILL",
             "ORDER ONLINE",
             "DINE IN",
             "DELIVERY"
