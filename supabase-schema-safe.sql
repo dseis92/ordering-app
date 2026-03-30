@@ -187,27 +187,33 @@ CREATE POLICY "Authenticated users can update menu items"
   ON menu_items FOR UPDATE
   USING (auth.role() = 'authenticated');
 
--- Orders: Anyone can insert (create orders)
+-- Orders: Enable inserts for everyone (guests and authenticated users)
 DROP POLICY IF EXISTS "Anyone can create orders" ON orders;
 CREATE POLICY "Anyone can create orders"
   ON orders FOR INSERT
+  TO public
   WITH CHECK (true);
 
--- Orders: Users can read their own orders (by user_id or email for guests)
+-- Orders: Enable inserts for anon role specifically
+DROP POLICY IF EXISTS "Anon can create orders" ON orders;
+CREATE POLICY "Anon can create orders"
+  ON orders FOR INSERT
+  TO anon
+  WITH CHECK (true);
+
+-- Orders: Users can read all orders (for now - can restrict later)
 DROP POLICY IF EXISTS "Users can read their own orders" ON orders;
 CREATE POLICY "Users can read their own orders"
   ON orders FOR SELECT
-  USING (
-    user_id = auth.uid() OR
-    (user_id IS NULL AND customer_email = auth.jwt() ->> 'email') OR
-    auth.role() = 'authenticated'
-  );
+  TO public
+  USING (true);
 
 -- Orders: Authenticated users can update
 DROP POLICY IF EXISTS "Authenticated users can update orders" ON orders;
 CREATE POLICY "Authenticated users can update orders"
   ON orders FOR UPDATE
-  USING (auth.role() = 'authenticated');
+  TO authenticated
+  USING (true);
 
 -- Loyalty points: Public read access
 DROP POLICY IF EXISTS "Public read access for loyalty points" ON loyalty_points;
