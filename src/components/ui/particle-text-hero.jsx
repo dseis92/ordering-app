@@ -227,8 +227,8 @@ export default function ParticleTextHero({ words = [] }) {
 
       frameCountRef.current++;
 
-      // Change word every 90 frames (about 1.5 seconds)
-      if (frameCountRef.current % 90 === 0 && words.length > 1) {
+      // Change word every 240 frames (about 4 seconds)
+      if (frameCountRef.current % 240 === 0 && words.length > 1) {
         wordIndexRef.current = (wordIndexRef.current + 1) % words.length;
         nextWord(words[wordIndexRef.current], canvas);
         setCurrentWord(words[wordIndexRef.current]);
