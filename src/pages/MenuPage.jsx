@@ -6,7 +6,7 @@ import MenuGrid from "../components/menu/MenuGrid";
 import CustomizeModal from "../components/menu/CustomizeModal";
 import StickyCartBar from "../components/cart/StickyCartBar";
 import DailySpecialsBanner from "../components/menu/DailySpecialsBanner";
-import ParticleTextHero from "../components/ui/particle-text-hero";
+import { ImageCarouselHero } from "../components/ui/image-carousel-hero";
 import brand from "../brand.config";
 import useOrderStore from "../store/useOrderStore";
 import useMenuStore from "../store/useMenuStore";
@@ -88,58 +88,78 @@ export default function MenuPage() {
         url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23000000' fill-opacity='0.015' fill-rule='evenodd'/%3E%3C/svg%3E")
       `
     }}>
-      {/* ================= PARTICLE TEXT HERO SECTION ================= */}
-      <section className="relative w-full h-[60vh] sm:h-[70vh] lg:h-[80vh] min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
-        <ParticleTextHero
-          words={[
-            "HILLTOP PUB & GRILL",
-            "ORDER ONLINE",
-            "DINE IN",
-            "DELIVERY"
-          ]}
-        />
-
-        {/* Action Buttons Overlay */}
-        <div className="absolute bottom-8 left-0 right-0 z-20 flex flex-col sm:flex-row gap-5 justify-center px-6 pointer-events-none">
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3, duration: 0.6 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleOrderOnline}
-            className="pointer-events-auto bg-hilltop-green hover:bg-hilltop-green-hover text-white px-12 py-5 rounded-2xl text-lg font-bold transition-all shadow-2xl flex items-center justify-center gap-3"
-          >
-            <span>Order Online</span>
-          </motion.button>
-
-          <motion.a
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.1, duration: 0.6 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            href={`tel:${brand.phone.replace(/\D/g, '')}`}
-            className="pointer-events-auto bg-white text-hilltop-charcoal px-12 py-5 rounded-2xl text-lg font-bold hover:bg-gray-100 transition-all shadow-2xl flex items-center justify-center gap-3"
-          >
-            <Phone size={24} />
-            <span>Call Us</span>
-          </motion.a>
-
-          <motion.button
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3.2, duration: 0.6 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={handleDelivery}
-            className="pointer-events-auto bg-amber-500 hover:bg-amber-600 text-white px-12 py-5 rounded-2xl text-lg font-bold transition-all shadow-2xl flex items-center justify-center gap-3"
-          >
-            <Truck size={24} />
-            <span>Get Delivery</span>
-          </motion.button>
-        </div>
-      </section>
+      {/* ================= IMAGE CAROUSEL HERO SECTION ================= */}
+      <ImageCarouselHero
+        title={brand.name}
+        subtitle="Stevens Point's favorite since the 1980s"
+        description="Famous fish fry, delicious burgers, and comfort food classics served fresh daily"
+        ctaText="Order Online Now"
+        onCtaClick={handleOrderOnline}
+        images={[
+          {
+            id: '1',
+            src: 'https://images.unsplash.com/photo-1580959375944-57609b97e5e6?w=400',
+            alt: 'Fish and Chips',
+            rotation: -15,
+          },
+          {
+            id: '2',
+            src: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400',
+            alt: 'Juicy Burger',
+            rotation: -8,
+          },
+          {
+            id: '3',
+            src: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=400',
+            alt: 'Gourmet Burger',
+            rotation: 5,
+          },
+          {
+            id: '4',
+            src: 'https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?w=400',
+            alt: 'Fried Chicken',
+            rotation: 12,
+          },
+          {
+            id: '5',
+            src: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400',
+            alt: 'Fresh Salad',
+            rotation: -12,
+          },
+          {
+            id: '6',
+            src: 'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=400',
+            alt: 'Loaded Fries',
+            rotation: 8,
+          },
+          {
+            id: '7',
+            src: 'https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=400',
+            alt: 'Steak Dinner',
+            rotation: -5,
+          },
+          {
+            id: '8',
+            src: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=400',
+            alt: 'Delicious Meal',
+            rotation: 15,
+          },
+        ]}
+        features={[
+          {
+            title: 'Famous Fish Fry',
+            description: 'Serving Kathy Mitchell\'s legendary fish fry since the 1980s',
+          },
+          {
+            title: 'Quick Service',
+            description: `Ready in ${brand.estimatedPickupMinutes} min for pickup, ${brand.estimatedDeliveryMinutes} min for delivery`,
+          },
+          {
+            title: 'Fresh Daily',
+            description: 'All dishes prepared fresh with quality ingredients',
+          },
+        ]}
+      />
 
       {/* ================= MENU SECTION ================= */}
       <div id="menu-section" className="mt-16">
