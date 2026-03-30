@@ -35,9 +35,6 @@ CREATE TABLE IF NOT EXISTS orders (
   order_type TEXT NOT NULL CHECK (order_type IN ('pickup', 'delivery')),
   status TEXT NOT NULL DEFAULT 'received' CHECK (status IN ('received', 'preparing', 'ready', 'out_for_delivery', 'completed', 'cancelled')),
 
-  -- User reference (nullable for guest orders)
-  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
-
   -- Customer info
   customer_name TEXT NOT NULL,
   customer_email TEXT NOT NULL,
@@ -51,7 +48,6 @@ CREATE TABLE IF NOT EXISTS orders (
   -- Pricing
   subtotal DECIMAL(10, 2) NOT NULL,
   tax DECIMAL(10, 2) NOT NULL,
-  tip DECIMAL(10, 2) DEFAULT 0,
   delivery_fee DECIMAL(10, 2) DEFAULT 0,
   total DECIMAL(10, 2) NOT NULL,
 
@@ -61,6 +57,26 @@ CREATE TABLE IF NOT EXISTS orders (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   completed_at TIMESTAMP WITH TIME ZONE
 );
+
+-- Add new columns to existing orders table (safe to run multiple times)
+DO $$
+BEGIN
+  -- Add user_id column if it doesn't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name = 'orders' AND column_name = 'user_id'
+  ) THEN
+    ALTER TABLE orders ADD COLUMN user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL;
+  END IF;
+
+  -- Add tip column if it doesn't exist
+  IF NOT EXISTS (
+    SELECT 1 FROM information_schema.columns
+    WHERE table_name = 'orders' AND column_name = 'tip'
+  ) THEN
+    ALTER TABLE orders ADD COLUMN tip DECIMAL(10, 2) DEFAULT 0;
+  END IF;
+END $$;
 
 -- Indexes for orders
 CREATE INDEX IF NOT EXISTS idx_orders_user_id ON orders(user_id);
