@@ -16,6 +16,8 @@ import useAdminStore from '../../store/useAdminStore';
 import { formatCurrency } from '../../lib/formatters';
 import brand from '../../brand.config';
 import { getAllOrders, updateOrderStatus as updateOrderStatusDB, subscribeToOrders } from '../../services/orders';
+import { sendOrderStatusEmail } from '../../services/email';
+import toast from 'react-hot-toast';
 
 export default function AdminDashboardPage() {
   const navigate = useNavigate();
@@ -118,10 +120,21 @@ export default function AdminDashboardPage() {
 
   const handleStatusChange = async (orderNumber, newStatus) => {
     try {
-      await updateOrderStatusDB(orderNumber, newStatus);
+      const updatedOrder = await updateOrderStatusDB(orderNumber, newStatus);
+      toast.success(`Order status updated to ${getStatusLabel(newStatus)}`);
+
+      // Send status update email
+      const emailResult = await sendOrderStatusEmail(updatedOrder);
+      if (emailResult.success) {
+        console.log('Status update email sent successfully');
+      } else {
+        console.warn('Failed to send status update email:', emailResult.error);
+      }
+
       // Real-time subscription will automatically update the orders
     } catch (error) {
       console.error('Error updating order status:', error);
+      toast.error('Failed to update order status');
     }
   };
 

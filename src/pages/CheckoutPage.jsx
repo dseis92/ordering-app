@@ -15,6 +15,8 @@ import Button from "../components/ui/Button";
 import Spinner from "../components/ui/Spinner";
 import brand from "../brand.config";
 import { createOrder } from "../services/orders";
+import { sendOrderConfirmationEmail } from "../services/email";
+import toast from "react-hot-toast";
 
 function CheckoutForm() {
   const navigate = useNavigate();
@@ -97,6 +99,20 @@ function CheckoutForm() {
       setOrderNumber(createdOrder.order_number);
       setEstimatedTime(createdOrder.estimated_time);
       setStatus("confirmed");
+
+      // Send confirmation email
+      try {
+        const emailResult = await sendOrderConfirmationEmail(createdOrder);
+        if (emailResult.success) {
+          console.log('Confirmation email sent successfully');
+        } else {
+          console.warn('Failed to send confirmation email:', emailResult.error);
+          // Don't block the order flow if email fails
+        }
+      } catch (emailError) {
+        console.error('Error sending confirmation email:', emailError);
+        // Continue with order flow even if email fails
+      }
 
       // Add loyalty points if user is logged in
       if (user) {
