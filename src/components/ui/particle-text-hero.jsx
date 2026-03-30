@@ -6,14 +6,14 @@ class Particle {
     this.vel = { x: 0, y: 0 };
     this.acc = { x: 0, y: 0 };
     this.target = { x: 0, y: 0 };
-    this.maxSpeed = 4.0;
-    this.maxForce = 0.3;
+    this.maxSpeed = 8.0;
+    this.maxForce = 0.6;
     this.closeEnoughTarget = 80;
     this.isKilled = false;
     this.startColor = { r: 0, g: 0, b: 0 };
     this.targetColor = { r: 255, g: 255, b: 255 };
     this.colorWeight = 0;
-    this.colorBlendRate = 0.04;
+    this.colorBlendRate = 0.08;
   }
 
   move() {
@@ -227,8 +227,8 @@ export default function ParticleTextHero({ words = [] }) {
 
       frameCountRef.current++;
 
-      // Change word every 120 frames (about 2 seconds)
-      if (frameCountRef.current % 120 === 0 && words.length > 1) {
+      // Change word every 90 frames (about 1.5 seconds)
+      if (frameCountRef.current % 90 === 0 && words.length > 1) {
         wordIndexRef.current = (wordIndexRef.current + 1) % words.length;
         nextWord(words[wordIndexRef.current], canvas);
         setCurrentWord(words[wordIndexRef.current]);
