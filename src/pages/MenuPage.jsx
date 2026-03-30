@@ -89,7 +89,7 @@ export default function MenuPage() {
       `
     }}>
       {/* ================= PARTICLE TEXT HERO SECTION ================= */}
-      <section className="relative w-full h-[80vh] min-h-[600px]">
+      <section className="relative w-full h-[60vh] sm:h-[70vh] lg:h-[80vh] min-h-[400px] sm:min-h-[500px] lg:min-h-[600px]">
         <ParticleTextHero
           words={[
             brand.name,

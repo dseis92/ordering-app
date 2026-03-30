@@ -116,8 +116,10 @@ export default function ParticleTextHero({ words = [] }) {
   const wordIndexRef = useRef(0);
 
   const [currentWord, setCurrentWord] = useState(words[0] || '');
+  const [isMobile, setIsMobile] = useState(false);
 
-  const pixelSteps = 5;
+  // Adjust pixel sampling based on screen size
+  const pixelSteps = isMobile ? 7 : 5;
 
   const generateRandomPos = (x, y, mag) => {
     const angle = Math.random() * Math.PI * 2;
@@ -133,8 +135,12 @@ export default function ParticleTextHero({ words = [] }) {
     offscreenCanvas.height = canvas.height;
     const offscreenCtx = offscreenCanvas.getContext('2d');
 
+    // Responsive font size based on canvas width
+    const isMobile = canvas.width < 768;
+    const fontSize = isMobile ? Math.min(canvas.width / 8, 40) : Math.min(canvas.width / 10, 80);
+
     offscreenCtx.fillStyle = 'white';
-    offscreenCtx.font = 'bold 80px Arial';
+    offscreenCtx.font = `bold ${fontSize}px Arial`;
     offscreenCtx.textAlign = 'center';
     offscreenCtx.textBaseline = 'middle';
     offscreenCtx.fillText(word, canvas.width / 2, canvas.height / 2);
@@ -202,6 +208,7 @@ export default function ParticleTextHero({ words = [] }) {
     const handleResize = () => {
       canvas.width = canvas.offsetWidth;
       canvas.height = canvas.offsetHeight;
+      setIsMobile(canvas.width < 768);
       if (words.length > 0) {
         nextWord(words[wordIndexRef.current], canvas);
       }
