@@ -6,6 +6,7 @@ import useCartStore from "../store/useCartStore";
 import useOrderStore from "../store/useOrderStore";
 import useOrderHistoryStore from "../store/useOrderHistoryStore";
 import useLoyaltyStore from "../store/useLoyaltyStore";
+import useAuthStore from "../store/useAuthStore";
 import OrderTypeToggle from "../components/checkout/OrderTypeToggle";
 import CustomerForm from "../components/checkout/CustomerForm";
 import DeliveryAddressForm from "../components/checkout/DeliveryAddressForm";
@@ -13,19 +14,21 @@ import CartSummary from "../components/cart/CartSummary";
 import Button from "../components/ui/Button";
 import Spinner from "../components/ui/Spinner";
 import brand from "../brand.config";
+import { createOrder } from "../services/orders";
 
 function CheckoutForm() {
   const navigate = useNavigate();
 
+  const user = useAuthStore((s) => s.user);
   const items = useCartStore((s) => s.items);
   const clearCart = useCartStore((s) => s.clearCart);
   const orderType = useOrderStore((s) => s.orderType);
   const customerInfo = useOrderStore((s) => s.customerInfo);
   const deliveryAddress = useOrderStore((s) => s.deliveryAddress);
+  const tipPercent = useOrderStore((s) => s.tipPercent);
   const setOrderNumber = useOrderStore((s) => s.setOrderNumber);
   const setStatus = useOrderStore((s) => s.setStatus);
   const setEstimatedTime = useOrderStore((s) => s.setEstimatedTime);
-  const addOrder = useOrderHistoryStore((s) => s.addOrder);
   const addPoints = useLoyaltyStore((s) => s.addPoints);
 
   const [submitting, setSubmitting] = useState(false);
@@ -34,8 +37,9 @@ function CheckoutForm() {
 
   const subtotal = items.reduce((s, i) => s + i.totalPrice * i.quantity, 0);
   const deliveryFee = orderType === "delivery" ? brand.deliveryFee : 0;
-  const tax = (subtotal + deliveryFee) * brand.taxRate;
-  const total = subtotal + deliveryFee + tax;
+  const tip = subtotal * (tipPercent / 100);
+  const tax = (subtotal + deliveryFee + tip) * brand.taxRate;
+  const total = subtotal + deliveryFee + tip + tax;
 
   const isValid =
     customerInfo.name.trim() &&
@@ -60,6 +64,7 @@ function CheckoutForm() {
 
       // Prepare order data
       const orderData = {
+        userId: user?.id || null,
         customer: {
           name: customerInfo.name,
           email: customerInfo.email,
@@ -77,6 +82,7 @@ function CheckoutForm() {
         notes: notes.trim() || null,
         subtotal,
         deliveryFee,
+        tip,
         tax,
         total,
         estimatedTime: orderType === "delivery"
@@ -84,48 +90,19 @@ function CheckoutForm() {
           : brand.estimatedPickupMinutes,
       };
 
-      // Submit order to API
-      const res = await fetch("/api/orders/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(orderData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to submit order");
-      }
+      // Submit order to Supabase
+      const createdOrder = await createOrder(orderData);
 
       // Update order store with response data
-      setOrderNumber(data.order.orderNumber);
-      setEstimatedTime(data.order.estimatedTime);
+      setOrderNumber(createdOrder.order_number);
+      setEstimatedTime(createdOrder.estimated_time);
       setStatus("confirmed");
 
-      // Save order to history
-      addOrder({
-        orderNumber: data.order.orderNumber,
-        items: items.map(item => ({
-          id: item.id,
-          name: item.name,
-          price: item.totalPrice,
-          quantity: item.quantity,
-          selectedOptions: item.selectedOptions,
-        })),
-        customer: customerInfo,
-        orderType,
-        deliveryAddress: formattedDeliveryAddress,
-        notes: notes.trim() || null,
-        subtotal,
-        deliveryFee,
-        tax,
-        total,
-        estimatedTime: data.order.estimatedTime,
-      });
-
-      // Add loyalty points
-      const pointsEarned = addPoints(total);
-      console.log(`Earned ${pointsEarned} loyalty points!`);
+      // Add loyalty points if user is logged in
+      if (user) {
+        const pointsEarned = addPoints(total);
+        console.log(`Earned ${pointsEarned} loyalty points!`);
+      }
 
       clearCart();
       navigate("/confirmation");

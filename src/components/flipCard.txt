@@ -1,0 +1,412 @@
+--- INSTALLATION ---
+npx shadcn@latest add https://21st.dev/r/m.umairwaheedansari/flip-card
+
+-- HOW TO USE --
+'use client';
+
+import { cn } from '@/lib/utils';
+import { ArrowRight, Code2, Copy, Rocket, Zap } from 'lucide-react';
+import { useState } from 'react';
+
+export interface CardFlipProps {
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  features?: string[];
+  color?: string;
+}
+
+export default function CardFlip({
+  title = 'Build MVPs Fast',
+  subtitle = 'Launch your idea in record time',
+  description = 'Copy, paste, customize—and launch your MVP faster than ever with our developer-first component library.',
+  features = [
+    'Copy & Paste Ready',
+    'Developer-First',
+    'MVP Optimized',
+    'Zero Setup Required',
+  ],
+  color = '#ff2e88'
+}: CardFlipProps) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  return (
+    <div
+      style={{
+        ['--primary' as any]: color ?? '#2563eb',
+      }}
+      className="group relative h-[360px] w-full max-w-[300px] [perspective:2000px]"
+      onMouseEnter={() => setIsFlipped(true)}
+      onMouseLeave={() => setIsFlipped(false)}
+    >
+      <div
+        className={cn(
+          'relative h-full w-full',
+          '[transform-style:preserve-3d]',
+          'transition-all duration-700',
+          isFlipped
+            ? '[transform:rotateY(180deg)]'
+            : '[transform:rotateY(0deg)]',
+        )}
+      >
+        {/* Front of card */}
+        <div
+          className={cn(
+            'absolute inset-0 h-full w-full',
+            '[transform:rotateY(0deg)] [backface-visibility:hidden]',
+            'overflow-hidden rounded-2xl',
+            'bg-gradient-to-br from-white via-slate-50 to-slate-100',
+            'dark:from-zinc-900 dark:via-zinc-900/95 dark:to-zinc-800',
+            'border border-slate-200 dark:border-zinc-800/50',
+            'shadow-lg dark:shadow-xl',
+            'transition-all duration-700',
+            'group-hover:shadow-xl dark:group-hover:shadow-2xl',
+            'group-hover:border-primary/20 dark:group-hover:border-primary/30',
+            isFlipped ? 'opacity-0' : 'opacity-100',
+          )}
+        >
+          {/* Background gradient effect */}
+          <div className="from-primary/5 dark:from-primary/10 absolute inset-0 bg-gradient-to-br via-transparent to-blue-500/5 dark:to-blue-500/10" />
+
+          {/* Animated code blocks */}
+          <div className="absolute inset-0 flex items-center justify-center pt-20">
+            <div className="relative flex h-[100px] w-[200px] flex-col items-center justify-center gap-2">
+              {/* Code blocks animation */}
+              {[...Array(6)].map((_, i) => (
+                <div
+                  key={i}
+                  className={cn(
+                    'h-3 w-full rounded-sm',
+                    'from-primary/20 via-primary/30 to-primary/20 bg-gradient-to-r',
+                    'animate-[slideIn_2s_ease-in-out_infinite]',
+                    'opacity-0',
+                  )}
+                  style={{
+                    width: `${60 + Math.random() * 40}%`,
+                    animationDelay: `${i * 0.2}s`,
+                    marginLeft: `${Math.random() * 20}%`,
+                  }}
+                />
+              ))}
+
+              {/* Central rocket icon */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div
+                  className={cn(
+                    'h-12 w-12 rounded-xl',
+                    'from-primary via-primary/90 to-primary/80 bg-gradient-to-br',
+                    'flex items-center justify-center',
+                    'shadow-primary/25 shadow-lg',
+                    'animate-pulse',
+                    'transition-all duration-500 group-hover:scale-110 group-hover:rotate-12',
+                  )}
+                >
+                  <Rocket className="h-6 w-6 text-white" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom content */}
+          <div className="absolute right-0 bottom-0 left-0 p-5">
+            <div className="flex items-center justify-between gap-3">
+              <div className="space-y-1.5">
+                <h3 className="text-lg leading-snug font-semibold tracking-tight text-zinc-900 transition-all duration-500 ease-out group-hover:translate-y-[-4px] dark:text-white">
+                  {title}
+                </h3>
+                <p className="line-clamp-2 text-sm tracking-tight text-zinc-600 transition-all delay-[50ms] duration-500 ease-out group-hover:translate-y-[-4px] dark:text-zinc-300">
+                  {subtitle}
+                </p>
+              </div>
+              <div className="group/icon relative">
+                <div
+                  className={cn(
+                    'absolute inset-[-8px] rounded-lg transition-opacity duration-300',
+                    'from-primary/20 via-primary/10 bg-gradient-to-br to-transparent',
+                    'opacity-0 group-hover/icon:opacity-100',
+                  )}
+                />
+                <Zap className="text-primary relative z-10 h-5 w-5 transition-all duration-300 group-hover/icon:scale-110 group-hover/icon:rotate-12" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Back of card */}
+        <div
+          className={cn(
+            'absolute inset-0 h-full w-full',
+            '[transform:rotateY(180deg)] [backface-visibility:hidden]',
+            'rounded-2xl p-5',
+            'bg-gradient-to-br from-white via-slate-50 to-slate-100',
+            'dark:from-zinc-900 dark:via-zinc-900/95 dark:to-zinc-800',
+            'border border-slate-200 dark:border-zinc-800',
+            'shadow-lg dark:shadow-xl',
+            'flex flex-col',
+            'transition-all duration-700',
+            'group-hover:shadow-xl dark:group-hover:shadow-2xl',
+            'group-hover:border-primary/20 dark:group-hover:border-primary/30',
+            !isFlipped ? 'opacity-0' : 'opacity-100',
+          )}
+        >
+          {/* Background gradient */}
+          <div className="from-primary/5 dark:from-primary/10 absolute inset-0 rounded-2xl bg-gradient-to-br via-transparent to-blue-500/5 dark:to-blue-500/10" />
+
+          <div className="relative z-10 flex-1 space-y-5">
+            <div className="space-y-2">
+              <div className="mb-2 flex items-center gap-2">
+                <div className="from-primary via-primary/90 to-primary/80 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br">
+                  <Code2 className="h-4 w-4 text-white" />
+                </div>
+                <h3 className="text-lg leading-snug font-semibold tracking-tight text-zinc-900 transition-all duration-500 ease-out group-hover:translate-y-[-2px] dark:text-white">
+                  {title}
+                </h3>
+              </div>
+              <p className="line-clamp-2 text-sm tracking-tight text-zinc-600 transition-all duration-500 ease-out group-hover:translate-y-[-2px] dark:text-zinc-400">
+                {description}
+              </p>
+            </div>
+
+            <div className="space-y-2.5">
+              {features.map((feature, index) => {
+                const icons = [Copy, Code2, Rocket, Zap];
+                const IconComponent = icons[index % icons.length];
+
+                return (
+                  <div
+                    key={feature}
+                    className="flex items-center gap-3 text-sm text-zinc-700 transition-all duration-500 dark:text-zinc-300"
+                    style={{
+                      transform: isFlipped
+                        ? 'translateX(0)'
+                        : 'translateX(-10px)',
+                      opacity: isFlipped ? 1 : 0,
+                      transitionDelay: `${index * 100 + 200}ms`,
+                    }}
+                  >
+                    <div className="bg-primary/10 dark:bg-primary/20 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md">
+                      <IconComponent className="text-primary h-3 w-3" />
+                    </div>
+                    <span className="font-medium">{feature}</span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="relative z-10 mt-auto border-t border-slate-200 pt-4 dark:border-zinc-800">
+            <div
+              className={cn(
+                'group/start relative',
+                'flex items-center justify-between',
+                'rounded-lg p-2.5',
+                'transition-all duration-300',
+                'bg-gradient-to-r from-slate-100 via-slate-100 to-slate-100',
+                'dark:from-zinc-800 dark:via-zinc-800 dark:to-zinc-800',
+                'hover:from-primary/10 hover:via-primary/5 hover:to-transparent',
+                'dark:hover:from-primary/20 dark:hover:via-primary/10 dark:hover:to-transparent',
+                'hover:scale-[1.02] hover:cursor-pointer',
+                'hover:border-primary/20 border border-transparent',
+              )}
+            >
+              <span className="group-hover/start:text-primary text-sm font-semibold text-zinc-900 transition-colors duration-300 dark:text-white">
+                Start Building
+              </span>
+              <div className="group/icon relative">
+                <div
+                  className={cn(
+                    'absolute inset-[-6px] rounded-lg transition-all duration-300',
+                    'from-primary/20 via-primary/10 bg-gradient-to-br to-transparent',
+                    'scale-90 opacity-0 group-hover/start:scale-100 group-hover/start:opacity-100',
+                  )}
+                />
+                <ArrowRight className="text-primary relative z-10 h-4 w-4 transition-all duration-300 group-hover/start:translate-x-1 group-hover/start:scale-110" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <style jsx>{`
+        @keyframes slideIn {
+          0% {
+            transform: translateX(-100px);
+            opacity: 0;
+          }
+          50% {
+            transform: translateX(0);
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateX(100px);
+            opacity: 0;
+          }
+        }
+      `}</style>
+    </div>
+  );
+}
+
+
+--- 
+
+
+
+
+
+
+
+
+
+
+_claude prompt_ 
+
+Y o u   a r e   g i v e n   a   t a s k   t o   i n t e g r a t e   a n   e x i s t i n g   R e a c t   c o m p o n e n t   i n   t h e   c o d e b a s e 
+ 
+ T h e   c o d e b a s e   s h o u l d   s u p p o r t : 
+ -   s h a d c n   p r o j e c t   s t r u c t u r e     
+ -   T a i l w i n d   C S S 
+ -   T y p e s c r i p t 
+ 
+ I f   i t   d o e s n ' t ,   p r o v i d e   i n s t r u c t i o n s   o n   h o w   t o   s e t u p   p r o j e c t   v i a   s h a d c n   C L I ,   i n s t a l l   T a i l w i n d   o r   T y p e s c r i p t . 
+ 
+ D e t e r m i n e   t h e   d e f a u l t   p a t h   f o r   c o m p o n e n t s   a n d   s t y l e s .   
+ I f   d e f a u l t   p a t h   f o r   c o m p o n e n t s   i s   n o t   / c o m p o n e n t s / u i ,   p r o v i d e   i n s t r u c t i o n s   o n   w h y   i t ' s   i m p o r t a n t   t o   c r e a t e   t h i s   f o l d e r 
+ C o p y - p a s t e   t h i s   c o m p o n e n t   t o   / c o m p o n e n t s / u i   f o l d e r : 
+ ` ` ` t s x 
+ f l i p - c a r d . t s x 
+ ' u s e   c l i e n t ' ; 
+ 
+ i m p o r t   {   c n   }   f r o m   ' @ / l i b / u t i l s ' ; 
+ i m p o r t   {   A r r o w R i g h t ,   C o d e 2 ,   C o p y ,   R o c k e t ,   Z a p   }   f r o m   ' l u c i d e - r e a c t ' ; 
+ i m p o r t   {   u s e S t a t e   }   f r o m   ' r e a c t ' ; 
+ 
+ e x p o r t   i n t e r f a c e   C a r d F l i p P r o p s   { 
+     t i t l e ? :   s t r i n g ; 
+     s u b t i t l e ? :   s t r i n g ; 
+     d e s c r i p t i o n ? :   s t r i n g ; 
+     f e a t u r e s ? :   s t r i n g [ ] ; 
+     c o l o r ? :   s t r i n g ; 
+ } 
+ 
+ e x p o r t   d e f a u l t   f u n c t i o n   C a r d F l i p ( { 
+     t i t l e   =   ' B u i l d   M V P s   F a s t ' , 
+     s u b t i t l e   =   ' L a u n c h   y o u r   i d e a   i n   r e c o r d   t i m e ' , 
+     d e s c r i p t i o n   =   ' C o p y ,   p a s t e ,   c u s t o m i z e  a n d   l a u n c h   y o u r   M V P   f a s t e r   t h a n   e v e r   w i t h   o u r   d e v e l o p e r - f i r s t   c o m p o n e n t   l i b r a r y . ' , 
+     f e a t u r e s   =   [ 
+         ' C o p y   &   P a s t e   R e a d y ' , 
+         ' D e v e l o p e r - F i r s t ' , 
+         ' M V P   O p t i m i z e d ' , 
+         ' Z e r o   S e t u p   R e q u i r e d ' , 
+     ] , 
+     c o l o r   =   ' # f f 2 e 8 8 ' 
+ } :   C a r d F l i p P r o p s )   { 
+     c o n s t   [ i s F l i p p e d ,   s e t I s F l i p p e d ]   =   u s e S t a t e ( f a l s e ) ; 
+ 
+     r e t u r n   ( 
+         < d i v 
+             s t y l e = { { 
+                 [ ' - - p r i m a r y '   a s   a n y ] :   c o l o r   ? ?   ' # 2 5 6 3 e b ' , 
+             } } 
+             c l a s s N a m e = " g r o u p   r e l a t i v e   h - [ 3 6 0 p x ]   w - f u l l   m a x - w - [ 3 0 0 p x ]   [ p e r s p e c t i v e : 2 0 0 0 p x ] " 
+             o n M o u s e E n t e r = { ( )   = >   s e t I s F l i p p e d ( t r u e ) } 
+             o n M o u s e L e a v e = { ( )   = >   s e t I s F l i p p e d ( f a l s e ) } 
+         > 
+             < d i v 
+                 c l a s s N a m e = { c n ( 
+                     ' r e l a t i v e   h - f u l l   w - f u l l ' , 
+                     ' [ t r a n s f o r m - s t y l e : p r e s e r v e - 3 d ] ' , 
+                     ' t r a n s i t i o n - a l l   d u r a t i o n - 7 0 0 ' , 
+                     i s F l i p p e d 
+                         ?   ' [ t r a n s f o r m : r o t a t e Y ( 1 8 0 d e g ) ] ' 
+                         :   ' [ t r a n s f o r m : r o t a t e Y ( 0 d e g ) ] ' , 
+                 ) } 
+             > 
+                 { / *   F r o n t   o f   c a r d   * / } 
+                 < d i v 
+                     c l a s s N a m e = { c n ( 
+                         ' a b s o l u t e   i n s e t - 0   h - f u l l   w - f u l l ' , 
+                         ' [ t r a n s f o r m : r o t a t e Y ( 0 d e g ) ]   [ b a c k f a c e - v i s i b i l i t y : h i d d e n ] ' , 
+                         ' o v e r f l o w - h i d d e n   r o u n d e d - 2 x l ' , 
+                         ' b g - g r a d i e n t - t o - b r   f r o m - w h i t e   v i a - s l a t e - 5 0   t o - s l a t e - 1 0 0 ' , 
+                         ' d a r k : f r o m - z i n c - 9 0 0   d a r k : v i a - z i n c - 9 0 0 / 9 5   d a r k : t o - z i n c - 8 0 0 ' , 
+                         ' b o r d e r   b o r d e r - s l a t e - 2 0 0   d a r k : b o r d e r - z i n c - 8 0 0 / 5 0 ' , 
+                         ' s h a d o w - l g   d a r k : s h a d o w - x l ' , 
+                         ' t r a n s i t i o n - a l l   d u r a t i o n - 7 0 0 ' , 
+                         ' g r o u p - h o v e r : s h a d o w - x l   d a r k : g r o u p - h o v e r : s h a d o w - 2 x l ' , 
+                         ' g r o u p - h o v e r : b o r d e r - p r i m a r y / 2 0   d a r k : g r o u p - h o v e r : b o r d e r - p r i m a r y / 3 0 ' , 
+                         i s F l i p p e d   ?   ' o p a c i t y - 0 '   :   ' o p a c i t y - 1 0 0 ' , 
+                     ) } 
+                 > 
+                     { / *   B a c k g r o u n d   g r a d i e n t   e f f e c t   * / } 
+                     < d i v   c l a s s N a m e = " f r o m - p r i m a r y / 5   d a r k : f r o m - p r i m a r y / 1 0   a b s o l u t e   i n s e t - 0   b g - g r a d i e n t - t o - b r   v i a - t r a n s p a r e n t   t o - b l u e - 5 0 0 / 5   d a r k : t o - b l u e - 5 0 0 / 1 0 "   / > 
+ 
+                     { / *   A n i m a t e d   c o d e   b l o c k s   * / } 
+                     < d i v   c l a s s N a m e = " a b s o l u t e   i n s e t - 0   f l e x   i t e m s - c e n t e r   j u s t i f y - c e n t e r   p t - 2 0 " > 
+                         < d i v   c l a s s N a m e = " r e l a t i v e   f l e x   h - [ 1 0 0 p x ]   w - [ 2 0 0 p x ]   f l e x - c o l   i t e m s - c e n t e r   j u s t i f y - c e n t e r   g a p - 2 " > 
+                             { / *   C o d e   b l o c k s   a n i m a t i o n   * / } 
+                             { [ . . . A r r a y ( 6 ) ] . m a p ( ( _ ,   i )   = >   ( 
+                                 < d i v 
+                                     k e y = { i } 
+                                     c l a s s N a m e = { c n ( 
+                                         ' h - 3   w - f u l l   r o u n d e d - s m ' , 
+                                         ' f r o m - p r i m a r y / 2 0   v i a - p r i m a r y / 3 0   t o - p r i m a r y / 2 0   b g - g r a d i e n t - t o - r ' , 
+                                         ' a n i m a t e - [ s l i d e I n _ 2 s _ e a s e - i n - o u t _ i n f i n i t e ] ' , 
+                                         ' o p a c i t y - 0 ' , 
+                                     ) } 
+                                     s t y l e = { { 
+                                         w i d t h :   ` $ { 6 0   +   M a t h . r a n d o m ( )   *   4 0 } % ` , 
+                                         a n i m a t i o n D e l a y :   ` $ { i   *   0 . 2 } s ` , 
+                                         m a r g i n L e f t :   ` $ { M a t h . r a n d o m ( )   *   2 0 } % ` , 
+                                     } } 
+                                 / > 
+                             ) ) } 
+ 
+                             { / *   C e n t r a l   r o c k e t   i c o n   * / } 
+                             < d i v   c l a s s N a m e = " a b s o l u t e   i n s e t - 0   f l e x   i t e m s - c e n t e r   j u s t i f y - c e n t e r " > 
+                                 < d i v 
+                                     c l a s s N a m e = { c n ( 
+                                         ' h - 1 2   w - 1 2   r o u n d e d - x l ' , 
+                                         ' f r o m - p r i m a r y   v i a - p r i m a r y / 9 0   t o - p r i m a r y / 8 0   b g - g r a d i e n t - t o - b r ' , 
+                                         ' f l e x   i t e m s - c e n t e r   j u s t i f y - c e n t e r ' , 
+                                         ' s h a d o w - p r i m a r y / 2 5   s h a d o w - l g ' , 
+                                         ' a n i m a t e - p u l s e ' , 
+                                         ' t r a n s i t i o n - a l l   d u r a t i o n - 5 0 0   g r o u p - h o v e r : s c a l e - 1 1 0   g r o u p - h o v e r : r o t a t e - 1 2 ' , 
+                                     ) } 
+                                 > 
+                                     < R o c k e t   c l a s s N a m e = " h - 6   w - 6   t e x t - w h i t e "   / > 
+                                 < / d i v > 
+                             < / d i v > 
+                         < / d i v > 
+                     < / d i v > 
+ 
+                     { / *   B o t t o m   c o n t e n t   * / } 
+                     < d i v   c l a s s N a m e = " a b s o l u t e   r i g h t - 0   b o t t o m - 0   l e f t - 0   p - 5 " > 
+                         < d i v   c l a s s N a m e = " f l e x   i t e m s - c e n t e r   j u s t i f y - b e t w e e n   g a p - 3 " > 
+                             < d i v   c l a s s N a m e = " s p a c e - y - 1 . 5 " > 
+                                 < h 3   c l a s s N a m e = " t e x t - l g   l e a d i n g - s n u g   f o n t - s e m i b o l d   t r a c k i n g - t i g h t   t e x t - z i n c - 9 0 0   t r a n s i t i o n - a l l   d u r a t i o n - 5 0 0   e a s e - o u t   g r o u p - h o v e r : t r a n s l a t e - y - [ - 4 p x ]   d a r k : t e x t - w h i t e " > 
+                                     { t i t l e } 
+                                 < / h 3 > 
+                                 < p   c l a s s N a m e = " l i n e - c l a m p - 2   t e x t - s m   t r a c k i n g - t i g h t   t e x t - z i n c - 6 0 0   t r a n s i t i o n - a l l   d e l a y - [ 5 0 m s ]   d u r a t i o n - 5 0 0   e a s e - o u t   g r o u p - h o v e r : t r a n s l a t e - y - [ - 4 p x ]   d a r k : t e x t - z i n c - 3 0 0 " > 
+                                     { s u b t i t l e } 
+                                 < / p > 
+                             < / d i v > 
+                             < d i v   c l a s s N a m e = " g r o u p / i c o n   r e l a t i v e " > 
+                                 < d i v 
+                                     c l a s s N a m e = { c n ( 
+                                         ' a b s o l u t e   i n s e t - [ - 8 p x ]   r o u n d e d - l g   t r a n s i t i o n - o p a c i t y   d u r a t i o n - 3 0 0 ' , 
+                                         ' f r o m - p r i m a r y / 2 0   v i a - p r i m a r y / 1 0   b g - g r a d i e n t - t o - b r   t o - t r a n s p a r e n t ' , 
+                                         ' o p a c i t y - 0   g r o u p - h o v e r / i c o n : o p a c i t y - 1 0 0 ' , 
+                                     ) } 
+                                 / > 
+                                 < Z a p   c l a s s N a m e = " t e x t - p r i m a r y   r e l a t i v e   z - 1 0   h - 5   w - 5   t r a n s i t i o n - a l l   d u r a t i o n - 3 0 0   g r o u p - h o v e r / i c o n : s c a l e - 1 1 0   g r o u p - h o v e r / i c o n : r o t a t e - 1 2 "   / > 
+                             < / d i v > 
+                         < / d i v > 
+                     < / d i v > 
+                 < / d i v > 
+ 
+                 { / *   B a c k   o f   c a r d   * / } 
+                 < d i v 
+                     c l a s s N a m e = { c n ( 
+                         ' a b s o l u t e   i n s e t - 0   h - f u l l   w - f u l l ' , 
+                         ' [ t r a n s f o r m : r o t a t e Y ( 1 8 

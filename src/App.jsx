@@ -12,6 +12,9 @@ import RewardsPage from "./pages/RewardsPage";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AccountPage from "./pages/AccountPage";
+import AddressesPage from "./pages/AddressesPage";
+import FavoritesPage from "./pages/FavoritesPage";
+import OrderStatusPage from "./pages/OrderStatusPage";
 import useAuthStore from "./store/useAuthStore";
 
 // Lazy load admin pages to reduce initial bundle size
@@ -60,10 +63,13 @@ export default function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/confirmation" element={<ConfirmationPage />} />
           <Route path="/orders" element={<OrderHistoryPage />} />
+          <Route path="/orders/:orderNumber" element={<OrderStatusPage />} />
           <Route path="/rewards" element={<RewardsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/catering" element={<CateringPage />} />
           <Route path="/account" element={<AccountPage />} />
+          <Route path="/account/addresses" element={<AddressesPage />} />
+          <Route path="/account/favorites" element={<FavoritesPage />} />
         </Route>
 
         {/* Admin Routes */}
